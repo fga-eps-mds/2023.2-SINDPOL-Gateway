@@ -6,14 +6,14 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+    - "8002:8000"
     volumes:
-      - .:/app/src/
+    - .:/app/src/
     restart: always
     env_file:
-      - .env
+    - .env
     depends_on:
-      - db
+    - db
     environment:
       GATEWAY_HOST: 0.0.0.0
       GATEWAY_DB_HOST: gateway-db
@@ -26,12 +26,14 @@ services:
   db:
     image: postgres
     hostname: gateway-db
+    ports:
+    - "5434:5432"
     environment:
       POSTGRES_PASSWORD: "gateway"
       POSTGRES_USER: "gateway"
       POSTGRES_DB: "gateway"
     volumes:
-      - gateway-db-data:/var/lib/postgresql/data
+    - gateway-db-data:/var/lib/postgresql/data
     restart: always
     healthcheck:
       test: pg_isready -U gateway
@@ -52,7 +54,7 @@ services:
       GATEWAY_DB_PASS: gateway
       GATEWAY_DB_BASE: gateway
     depends_on:
-      - db
+    - db
 
 volumes:
   gateway-db-data:
