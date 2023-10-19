@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app/src/
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+    environment:
+      GATEWAY_HOST: 0.0.0.0
+      GATEWAY_DB_HOST: gateway-db
+      GATEWAY_DB_PORT: 5432
+      GATEWAY_DB_USER: gateway
+      GATEWAY_DB_PASS: gateway
+      GATEWAY_DB_BASE: gateway
+      GATEWAY_RELOAD: "True"
+
+  db:
+    image: postgres
+    hostname: gateway-db
+    environment:
+      POSTGRES_PASSWORD: "gateway"
+      POSTGRES_USER: "gateway"
+      POSTGRES_DB: "gateway"
+    volumes:
+      - gateway-db-data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: pg_isready -U gateway
+      interval: 2s
+      timeout: 3s
+      retries: 40
+
+  migrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    command: alembic upgrade head
+    environment:
+      GATEWAY_DB_HOST: gateway-db
+      GATEWAY_DB_PORT: 5432
+      GATEWAY_DB_USER: gateway
+      GATEWAY_DB_PASS: gateway
+      GATEWAY_DB_BASE: gateway
+    depends_on:
+      - db
+
+volumes:
+  gateway-db-data:
+    name: gateway-db-data
