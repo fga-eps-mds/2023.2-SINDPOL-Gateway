@@ -24,6 +24,7 @@ services:
       GATEWAY_DB_PASS: gateway
       GATEWAY_DB_BASE: gateway
       GATEWAY_RELOAD: "True"
+      GATEWAY_GESTAO_HOST: http://gestao:8001
     networks:
     - sindpol_network
 

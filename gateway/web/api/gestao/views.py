@@ -1,6 +1,8 @@
 import requests
 from fastapi import APIRouter, Request
 
+from gateway.settings import settings
+
 router = APIRouter()
 
 
@@ -10,7 +12,7 @@ async def get_users(
     offset: int = 0,
 ) -> dict:
     response = requests.get(
-        "http://gestao:8001/api/user",
+        f"{settings.gestao_host}/api/user",
         params={
             "limit": limit,
             "offset": offset,
@@ -22,14 +24,17 @@ async def get_users(
 
 @router.get("/users/{user_id}")
 async def get_user(user_id: str) -> dict:
-    response = requests.get(f"http://gestao:8001/api/user/{user_id}", timeout=600)
+    response = requests.get(
+        f"{settings.gestao_host}/api/user/{user_id}",
+        timeout=600,
+    )
     return response.json()
 
 
 @router.post("/users/")
 async def create_user(request: Request) -> dict:
     response = requests.post(
-        "http://gestao:8001/api/user",
+        f"{settings.gestao_host}/api/user",
         json=await request.json(),
         timeout=600,
     )
@@ -39,7 +44,7 @@ async def create_user(request: Request) -> dict:
 @router.put("/users/{user_id}")
 async def update_user(user_id: str, request: Request) -> dict:
     response = requests.put(
-        f"http://gestao:8001/api/user/{user_id}",
+        f"{settings.gestao_host}/api/user/{user_id}",
         json=await request.json(),
         timeout=600,
     )
@@ -48,5 +53,8 @@ async def update_user(user_id: str, request: Request) -> dict:
 
 @router.delete("/users/{user_id}")
 async def delete_user(user_id: str) -> None:
-    response = requests.delete(f"http://gestao:8001/api/user/{user_id}", timeout=600)
+    response = requests.delete(
+        f"{settings.gestao_host}/api/user/{user_id}",
+        timeout=600,
+    )
     return response.json()
