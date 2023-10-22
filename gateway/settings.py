@@ -46,6 +46,9 @@ class Settings(BaseSettings):
     db_base: str = "gateway"
     db_echo: bool = False
 
+    # Gestao
+    gestao_host: str = "http://localhost:8001"
+
     @property
     def db_url(self) -> URL:
         """
