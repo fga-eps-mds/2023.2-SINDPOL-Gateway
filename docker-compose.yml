@@ -5,8 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    hostname: gateway
     ports:
-    - "8002:8000"
+    - "8002:8002"
     volumes:
     - .:/app/src/
     restart: always
@@ -16,12 +17,15 @@ services:
     - db
     environment:
       GATEWAY_HOST: 0.0.0.0
+      GATEWAY_PORT: 8002
       GATEWAY_DB_HOST: gateway-db
       GATEWAY_DB_PORT: 5432
       GATEWAY_DB_USER: gateway
       GATEWAY_DB_PASS: gateway
       GATEWAY_DB_BASE: gateway
       GATEWAY_RELOAD: "True"
+    networks:
+    - sindpol_network
 
   db:
     image: postgres
@@ -40,6 +44,8 @@ services:
       interval: 2s
       timeout: 3s
       retries: 40
+    networks:
+    - sindpol_network
 
   migrator:
     build:
@@ -55,7 +61,14 @@ services:
       GATEWAY_DB_BASE: gateway
     depends_on:
     - db
+    networks:
+    - sindpol_network
 
 volumes:
   gateway-db-data:
     name: gateway-db-data
+
+networks:
+  sindpol_network:
+    external: true
+    driver: 'bridge'
