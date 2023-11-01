@@ -3,7 +3,6 @@ from pathlib import Path
 from tempfile import gettempdir
 
 from pydantic import BaseSettings
-from yarl import URL
 
 TEMP_DIR = Path(gettempdir())
 
@@ -38,32 +37,9 @@ class Settings(BaseSettings):
     environment: str = "dev"
 
     log_level: LogLevel = LogLevel.INFO
-    # Variables for the database
-    db_host: str = "localhost"
-    db_port: int = 5432
-    db_user: str = "gateway"
-    db_pass: str = "gateway"
-    db_base: str = "gateway"
-    db_echo: bool = False
 
     # Gestao
     gestao_host: str = "http://localhost:8001"
-
-    @property
-    def db_url(self) -> URL:
-        """
-        Assemble database URL from settings.
-
-        :return: database URL.
-        """
-        return URL.build(
-            scheme="postgresql",
-            host=self.db_host,
-            port=self.db_port,
-            user=self.db_user,
-            password=self.db_pass,
-            path=f"/{self.db_base}",
-        )
 
     class Config:
         env_file = ".env"

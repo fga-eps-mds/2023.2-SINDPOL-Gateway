@@ -36,9 +36,6 @@ But you have to rebuild image every time you modify `poetry.lock` or `pyproject.
 $ tree "gateway"
 gateway
 ├── conftest.py  # Fixtures for all tests.
-├── db  # module contains db configurations
-│   ├── dao  # Data Access Objects. Contains different classes to interact with database.
-│   └── models  # Package contains different models for ORMs.
 ├── __main__.py  # Startup script. Starts uvicorn.
 ├── services  # Package for different external services such as rabbit or redis etc.
 ├── settings.py  # Main configuration settings for project.
@@ -132,15 +129,7 @@ docker-compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml --p
 ```
 
 For running tests on your local machine.
-1. you need to start a database.
-
-I prefer doing it with docker:
-```
-docker run -p "5434:5432" -e "POSTGRES_PASSWORD=gateway" -e "POSTGRES_USER=gateway" -e "POSTGRES_DB=gateway" postgres:13.8-bullseye
-```
-
-
-2. Run the pytest.
+1. Run the pytest.
 ```bash
 pytest -vv .
 ```

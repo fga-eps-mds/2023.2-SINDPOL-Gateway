@@ -13,61 +13,13 @@ services:
     restart: always
     env_file:
     - .env
-    depends_on:
-    - db
     environment:
       HOST: 0.0.0.0
       PORT: 8002
-      DB_HOST: gateway-db
-      DB_PORT: 5432
-      DB_USER: gateway
-      DB_PASS: gateway
-      DB_BASE: gateway
       RELOAD: "True"
       GESTAO_HOST: http://gestao:8001
     networks:
     - sindpol_network
-
-  db:
-    image: postgres
-    hostname: gateway-db
-    ports:
-    - "5434:5432"
-    environment:
-      POSTGRES_PASSWORD: "gateway"
-      POSTGRES_USER: "gateway"
-      POSTGRES_DB: "gateway"
-    volumes:
-    - gateway-db-data:/var/lib/postgresql/data
-    restart: always
-    healthcheck:
-      test: pg_isready -U gateway
-      interval: 2s
-      timeout: 3s
-      retries: 40
-    networks:
-    - sindpol_network
-
-  migrator:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: "no"
-    command: alembic upgrade head
-    environment:
-      DB_HOST: gateway-db
-      DB_PORT: 5432
-      DB_USER: gateway
-      DB_PASS: gateway
-      DB_BASE: gateway
-    depends_on:
-    - db
-    networks:
-    - sindpol_network
-
-volumes:
-  gateway-db-data:
-    name: gateway-db-data
 
 networks:
   sindpol_network:
