@@ -46,5 +46,5 @@ jobs:
     - name: Run pytest check
       run: poetry run pytest -vv --cov="gateway" .
       env:
-        GATEWAY_HOST: "0.0.0.0"
-        GATEWAY_DB_HOST: localhost
+        HOST: "0.0.0.0"
+        DB_HOST: localhost

@@ -57,18 +57,16 @@ This application can be configured with environment variables.
 You can create `.env` file in the root directory and place all
 environment variables here.
 
-All environment variables should start with "GATEWAY_" prefix.
-
 For example if you see in your "gateway/settings.py" a variable named like
-`random_parameter`, you should provide the "GATEWAY_RANDOM_PARAMETER"
+`random_parameter`, you should provide the "RANDOM_PARAMETER"
 variable to configure the value. This behaviour can be changed by overriding `env_prefix` property
 in `gateway.settings.Settings.Config`.
 
 An example of .env file:
 ```bash
-GATEWAY_RELOAD="True"
-GATEWAY_PORT="8000"
-GATEWAY_ENVIRONMENT="dev"
+RELOAD="True"
+PORT="8000"
+ENVIRONMENT="dev"
 ```
 
 You can read more about BaseSettings class here: https://pydantic-docs.helpmanual.io/usage/settings/

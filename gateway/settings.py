@@ -67,7 +67,7 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
-        env_prefix = "GATEWAY_"
+        env_prefix = ""
         env_file_encoding = "utf-8"
 
 

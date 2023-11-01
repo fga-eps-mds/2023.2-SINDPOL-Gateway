@@ -16,15 +16,15 @@ services:
     depends_on:
     - db
     environment:
-      GATEWAY_HOST: 0.0.0.0
-      GATEWAY_PORT: 8002
-      GATEWAY_DB_HOST: gateway-db
-      GATEWAY_DB_PORT: 5432
-      GATEWAY_DB_USER: gateway
-      GATEWAY_DB_PASS: gateway
-      GATEWAY_DB_BASE: gateway
-      GATEWAY_RELOAD: "True"
-      GATEWAY_GESTAO_HOST: http://gestao:8001
+      HOST: 0.0.0.0
+      PORT: 8002
+      DB_HOST: gateway-db
+      DB_PORT: 5432
+      DB_USER: gateway
+      DB_PASS: gateway
+      DB_BASE: gateway
+      RELOAD: "True"
+      GESTAO_HOST: http://gestao:8001
     networks:
     - sindpol_network
 
@@ -55,11 +55,11 @@ services:
     restart: "no"
     command: alembic upgrade head
     environment:
-      GATEWAY_DB_HOST: gateway-db
-      GATEWAY_DB_PORT: 5432
-      GATEWAY_DB_USER: gateway
-      GATEWAY_DB_PASS: gateway
-      GATEWAY_DB_BASE: gateway
+      DB_HOST: gateway-db
+      DB_PORT: 5432
+      DB_USER: gateway
+      DB_PASS: gateway
+      DB_BASE: gateway
     depends_on:
     - db
     networks:
