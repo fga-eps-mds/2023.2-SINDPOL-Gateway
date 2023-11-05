@@ -22,7 +22,7 @@ You can read more about poetry here: https://python-poetry.org/
 
 ## Docker
 
-You can start the project with docker using this command:
+You can start the project with docker using this command below:
 
 ```bash
 docker-compose up
