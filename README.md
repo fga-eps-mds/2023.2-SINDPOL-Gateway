@@ -129,7 +129,19 @@ docker-compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml --p
 ```
 
 For running tests on your local machine.
+<<<<<<< HEAD
+1. you need to start a database.
+
+I prefer doing it with docker:
+```
+docker run -p "5434:5432" -e "POSTGRES_PASSWORD=gateway" -e "POSTGRES_USER=gateway" -e "POSTGRES_DB=gateway" postgres:13.8-bullseye
+```
+
+
+2. Run the pytest.
+=======
 1. Run the pytest.
+>>>>>>> 1165b02eb3d15a3130786787bdc62bf724d0d4d1
 ```bash
 pytest -vv .
 ```
