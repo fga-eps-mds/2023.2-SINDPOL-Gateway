@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Criar diretório
+        run: mkdir analytics-raw-data
+
       - name: Create Metrics SonarCloud
         run: python3 metrics/sonar-metrics.py ${{ github.event.repository.name }} ${{ github.ref_name }}
 
