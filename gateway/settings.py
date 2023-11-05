@@ -37,16 +37,6 @@ class Settings(BaseSettings):
     environment: str = "dev"
 
     log_level: LogLevel = LogLevel.INFO
-<<<<<<< HEAD
-    # Variables for the database
-    db_host: str = "localhost"
-    db_port: int = 5434
-    db_user: str = "gateway"
-    db_pass: str = "gateway"
-    db_base: str = "gateway"
-    db_echo: bool = False
-=======
->>>>>>> 1165b02eb3d15a3130786787bdc62bf724d0d4d1
 
     # Gestao
     gestao_host: str = "http://localhost:8001"
