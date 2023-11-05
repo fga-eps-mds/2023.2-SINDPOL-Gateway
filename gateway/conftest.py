@@ -3,11 +3,7 @@ from typing import Any, AsyncGenerator
 import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
-from sqlalchemy.engine import create_engine
 
-from gateway.db.config import database
-from gateway.db.utils import create_database, drop_database
-from gateway.settings import settings
 from gateway.web.application import get_app
 
 
@@ -19,34 +15,6 @@ def anyio_backend() -> str:
     :return: backend name.
     """
     return "asyncio"
-
-
-@pytest.fixture(autouse=True)
-async def initialize_db() -> AsyncGenerator[None, None]:
-    """
-    Create models and databases.
-
-    :yield: new engine.
-    """
-    from gateway.db.meta import meta  # noqa: WPS433
-    from gateway.db.models import load_all_models  # noqa: WPS433
-
-    load_all_models()
-
-    create_database()
-
-    engine = create_engine(str(settings.db_url))
-    with engine.begin() as conn:
-        meta.create_all(conn)
-
-    engine.dispose()
-
-    await database.connect()
-
-    yield
-
-    await database.disconnect()
-    drop_database()
 
 
 @pytest.fixture

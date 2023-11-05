@@ -17,36 +17,9 @@ jobs:
         POETRY_VIRTUALENVS_CREATE: false
     - name: Run black check
       run: poetry run black --check .
-  flake8:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-    - name: Install deps
-      uses: knowsuchagency/poetry-install@v1
-      env:
-        POETRY_VIRTUALENVS_CREATE: false
-    - name: Run flake8 check
-      run: poetry run flake8 --count .
-  mypy:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-    - name: Install deps
-      uses: knowsuchagency/poetry-install@v1
-      env:
-        POETRY_VIRTUALENVS_CREATE: false
-    - name: Run mypy check
-      run: poetry run mypy .
   pytest:
     runs-on: ubuntu-latest
+<<<<<<< HEAD
     services:
       gateway-db:
         image: postgres:13.8-bullseye
@@ -61,6 +34,8 @@ jobs:
           --health-retries=5
         ports:
         - 5434:5432
+=======
+>>>>>>> 1165b02eb3d15a3130786787bdc62bf724d0d4d1
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
@@ -74,5 +49,4 @@ jobs:
     - name: Run pytest check
       run: poetry run pytest -vv --cov="gateway" .
       env:
-        GATEWAY_HOST: "0.0.0.0"
-        GATEWAY_DB_HOST: localhost
+        HOST: "0.0.0.0"

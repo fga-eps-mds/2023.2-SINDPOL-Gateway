@@ -36,9 +36,6 @@ But you have to rebuild image every time you modify `poetry.lock` or `pyproject.
 $ tree "gateway"
 gateway
 ├── conftest.py  # Fixtures for all tests.
-├── db  # module contains db configurations
-│   ├── dao  # Data Access Objects. Contains different classes to interact with database.
-│   └── models  # Package contains different models for ORMs.
 ├── __main__.py  # Startup script. Starts uvicorn.
 ├── services  # Package for different external services such as rabbit or redis etc.
 ├── settings.py  # Main configuration settings for project.
@@ -57,18 +54,16 @@ This application can be configured with environment variables.
 You can create `.env` file in the root directory and place all
 environment variables here.
 
-All environment variables should start with "GATEWAY_" prefix.
-
 For example if you see in your "gateway/settings.py" a variable named like
-`random_parameter`, you should provide the "GATEWAY_RANDOM_PARAMETER"
+`random_parameter`, you should provide the "RANDOM_PARAMETER"
 variable to configure the value. This behaviour can be changed by overriding `env_prefix` property
 in `gateway.settings.Settings.Config`.
 
 An example of .env file:
 ```bash
-GATEWAY_RELOAD="True"
-GATEWAY_PORT="8000"
-GATEWAY_ENVIRONMENT="dev"
+RELOAD="True"
+PORT="8000"
+ENVIRONMENT="dev"
 ```
 
 You can read more about BaseSettings class here: https://pydantic-docs.helpmanual.io/usage/settings/
@@ -85,9 +80,7 @@ It's configured using .pre-commit-config.yaml file.
 
 By default it runs:
 * black (formats your code);
-* mypy (validates types);
 * isort (sorts imports in all files);
-* flake8 (spots possible bugs);
 
 
 You can read more about pre-commit here: https://pre-commit.com/
@@ -136,6 +129,7 @@ docker-compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml --p
 ```
 
 For running tests on your local machine.
+<<<<<<< HEAD
 1. you need to start a database.
 
 I prefer doing it with docker:
@@ -145,6 +139,9 @@ docker run -p "5434:5432" -e "POSTGRES_PASSWORD=gateway" -e "POSTGRES_USER=gatew
 
 
 2. Run the pytest.
+=======
+1. Run the pytest.
+>>>>>>> 1165b02eb3d15a3130786787bdc62bf724d0d4d1
 ```bash
 pytest -vv .
 ```
