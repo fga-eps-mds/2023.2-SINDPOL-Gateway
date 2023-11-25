@@ -88,3 +88,15 @@ async def disable_user(user_id: str) -> None:
         status_code=response.status_code,
         content=response.json(),
     )
+
+
+@router.patch("/users/{user_id}/enable")
+async def enable_user(user_id: str) -> None:
+    response = requests.patch(
+        f"{settings.gestao_host}/api/users/{user_id}/enable",
+        timeout=600,
+    )
+    return JSONResponse(
+        status_code=response.status_code,
+        content=response.json(),
+    )
