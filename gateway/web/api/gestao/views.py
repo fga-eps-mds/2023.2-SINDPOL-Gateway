@@ -100,3 +100,23 @@ async def enable_user(user_id: str) -> None:
         status_code=response.status_code,
         content=response.json(),
     )
+
+
+@router.post('/login/user')
+async def login_user(request: Request) -> dict:
+    response = requests.post(
+        f'{settings.gestao_host}/api/login/user',
+        json=await request.json(),
+        timeout=600,
+    )
+    return JSONResponse(status_code=response.status_code, content=response.json(),)
+
+
+@router.post('/login/recover_password')
+async def recover_password(request: Request) -> None:
+    response = requests.post(
+        f'{settings.gestao_host}/api/login/recover_password',
+        json=await request.json(),
+        timeout=600,
+    )
+    return JSONResponse(status_code=response.status_code, content=response.json(),)
