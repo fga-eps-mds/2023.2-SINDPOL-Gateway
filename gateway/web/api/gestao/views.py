@@ -2,7 +2,7 @@ from typing import List
 
 import requests
 from fastapi import APIRouter, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 from gateway.settings import settings
 
@@ -125,4 +125,17 @@ async def recover_password(request: Request) -> None:
     return JSONResponse(
         status_code=response.status_code,
         content=response.json(),
+    )
+
+
+@router.get("/documents/report-users")
+async def get_report_users() -> None:
+    response = requests.get(
+        f"{settings.gestao_host}/api/documents/report-users",
+        timeout=600,
+        stream=True,
+    )
+    return StreamingResponse(
+        response.iter_content(chunk_size=1024),
+        media_type=response.headers["Content-Type"],
     )
