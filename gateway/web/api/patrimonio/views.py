@@ -10,7 +10,10 @@ router = APIRouter()
 
 
 @router.get("/patrimony/")
-async def get_patrimonys(limit: int = 10, offset: int = 0,) -> List[dict]:
+async def get_patrimonys(
+    limit: int = 10,
+    offset: int = 0,
+) -> List[dict]:
     response = requests.get(
         f"{settings.patrimonio_host}/api/patrimony",
         params={
