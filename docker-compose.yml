@@ -18,6 +18,7 @@ services:
       PORT: 8002
       RELOAD: "True"
       GESTAO_HOST: http://gestao:8001
+      PATRIMONIO_HOST: http://patrimonio:8000
     networks:
     - sindpol_network
 

@@ -40,6 +40,9 @@ class Settings(BaseSettings):
 
     # Gestao
     gestao_host: str = "http://localhost:8001"
+    
+    # Patrimonio
+    patrimonio_host: str = "http://localhost:8000"
 
     class Config:
         env_file = ".env"
