@@ -129,7 +129,7 @@ async def recover_password(request: Request) -> dict:
 
 
 @router.get("/documents/affiliation/{user_id}")
-async def get_report_users(user_id: str) -> StreamingResponse:
+async def get_affiliation_doc(user_id: str) -> StreamingResponse:
     response = requests.get(
         f"{settings.gestao_host}/api/documents/affiliation/{user_id}",
         timeout=600,
