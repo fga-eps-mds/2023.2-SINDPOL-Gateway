@@ -2,7 +2,7 @@ from typing import List
 
 import requests
 from fastapi import APIRouter, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 from gateway.settings import settings
 
@@ -67,7 +67,7 @@ async def update_user(user_id: str, request: Request) -> dict:
 
 
 @router.delete("/users/{user_id}")
-async def delete_user(user_id: str) -> None:
+async def delete_user(user_id: str) -> dict:
     response = requests.delete(
         f"{settings.gestao_host}/api/users/{user_id}",
         timeout=600,
@@ -79,7 +79,7 @@ async def delete_user(user_id: str) -> None:
 
 
 @router.patch("/users/{user_id}/disable")
-async def disable_user(user_id: str) -> None:
+async def disable_user(user_id: str) -> dict:
     response = requests.patch(
         f"{settings.gestao_host}/api/users/{user_id}/disable",
         timeout=600,
@@ -91,7 +91,7 @@ async def disable_user(user_id: str) -> None:
 
 
 @router.patch("/users/{user_id}/enable")
-async def enable_user(user_id: str) -> None:
+async def enable_user(user_id: str) -> dict:
     response = requests.patch(
         f"{settings.gestao_host}/api/users/{user_id}/enable",
         timeout=600,
@@ -116,7 +116,7 @@ async def login_user(request: Request) -> dict:
 
 
 @router.post("/login/recover_password")
-async def recover_password(request: Request) -> None:
+async def recover_password(request: Request) -> dict:
     response = requests.post(
         f"{settings.gestao_host}/api/login/recover_password",
         json=await request.json(),
@@ -125,4 +125,30 @@ async def recover_password(request: Request) -> None:
     return JSONResponse(
         status_code=response.status_code,
         content=response.json(),
+    )
+
+
+@router.get("/documents/affiliation/{user_id}")
+async def get_affiliation_doc(user_id: str) -> StreamingResponse:
+    response = requests.get(
+        f"{settings.gestao_host}/api/documents/affiliation/{user_id}",
+        timeout=600,
+        stream=True,
+    )
+    return StreamingResponse(
+        response.iter_content(chunk_size=1024),
+        media_type=response.headers["Content-Type"],
+    )
+
+
+@router.get("/documents/report-users")
+async def get_report_users() -> StreamingResponse:
+    response = requests.get(
+        f"{settings.gestao_host}/api/documents/report-users",
+        timeout=600,
+        stream=True,
+    )
+    return StreamingResponse(
+        response.iter_content(chunk_size=1024),
+        media_type=response.headers["Content-Type"],
     )
