@@ -115,10 +115,10 @@ async def login_user(request: Request) -> dict:
     )
 
 
-@router.post("/login/recover_password")
+@router.post("/login/recover-password")
 async def recover_password(request: Request) -> dict:
     response = requests.post(
-        f"{settings.gestao_host}/api/login/recover_password",
+        f"{settings.gestao_host}/api/login/recover-password",
         json=await request.json(),
         timeout=600,
     )
